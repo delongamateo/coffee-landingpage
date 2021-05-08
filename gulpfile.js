@@ -132,6 +132,17 @@ function reload(done) {
     browsersync_server.reload();
     done();
 }
+
+var gulp        = require('gulp');
+var deploy      = require('gulp-gh-pages');
+
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', function () {
+  return gulp.src("./dist/**/*")
+    .pipe(deploy())
+});
  
 // export tasks
 exports.structure = createStructure;
@@ -139,3 +150,4 @@ exports.publish   = gulp.series(cleanAssets, publishHtml,  publishFonts, publish
 exports.build     = gulp.series(cleanAssets, publishHtmlProduction,  publishFonts, publishImages, compileScssProduction);
 exports.build_dev = gulp.series(cleanAssets, publishHtmlDevelopment, publishFonts, publishImages, compileScssDevelopment);
 exports.watch     = gulp.series(cleanAssets, publishHtmlDevelopment, publishFonts, publishImages, compileScssDevelopment, serve, watchFiles);
+
